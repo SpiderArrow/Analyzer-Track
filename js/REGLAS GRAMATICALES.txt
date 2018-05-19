@@ -1,0 +1,95 @@
+VERBO TO BE
+PRESENTE
+
+------PRONOMBRES/VERBOS--------
+
+[SHE /HE /IT] [IS]
+[YOU/ THEY/ WE] [ARE]
+[I] [AM]
+
+        PRONOMBRE       VERBO           CUALQUIER PALABRA
+        -------------------------------------------------
+	YOU 		ARE 		TALL
+	I		AM		HAPPY
+	HE		IS		WORRIED
+
+SIGNOS PARA LAS REGLAS GRAMATICALES
+
+INDICA CONCATENACION --------->  +
+    
+INDICA REPETICION ------------>  *
+    
+INDICA ALTERNATIVAS ---------->  |
+
+    r+ indica una o mas repeticiones de r, (0|1)+ = (0|1)(0|1)*: 010101010101
+
+    .*b.* indica cualquier cadena que tiene una letra b
+
+    [] indica un rango de caracteres [a-z], caracter entre la a y la z minuscula
+    
+    [a-zA-Z] indica cualquier letra del abecedario minuscula o mayuscula
+
+    [0-9] idica cualquier digito de 0 a 9
+
+    [abc] indica que puede ser a ó b ó c; a|b|c
+
+    ~ cualquier caracter excepto un conjunto dato ~(a|b) indica cualquier 
+    caracter que no sea una a ó una b
+
+    ? indica opcionalidad, r? indica que la expresion r puede aparecer o no.
+    En el caso que aparezca solo lo hará una vez
+
+    identificador = letra (letra|digito)*
+    letra letra letra digito digito : LOS78
+    letra digito letra digito: J8J9
+
+FICHERO LEX CONSTITUIDO POR TRES PARTES: DEFINICIONES %% REGLAS %% RUTINAS AUX.
+
+{DEFINICIONES} %% {REGLAS} PATRON 1 {CÓDIGO C} ... %%
+
+#######------INGLES-------#######
+
+PARTES DE UNA ORACION
+---------------------
+Sustantivo  -> persona, lugar o cosa
+Verbos      -> accion del sustantivo
+Adjetivo    -> describe al sustantivo
+Adverbio    -> describe otras palabras
+Adverbio    -> sujeto, el o los que realizan la accion
+Objeto      -> el sustantivo o los que reciben la accion
+
+ESTRUCTURAS BASICAS
+--------------------
+Sujeto-verbo: The boy plays
+Sujeto-verbo-objeto: The girl pets the cat
+Sujeto-verbo-adjetivo: Lisa is pretty
+Sujeto-verbo-adverbio: Maria laughs loudly
+Sujeto-verbo-sustantivo: I am the teacher
+
+REGLAS PARA BNF
+---------------
+
+<ARTICULO_DEF> ::= THE
+<ARTICULO_INDEF> ::= A
+<SUSTANTIVO> ::= BOY | GIRL | CAR | TEACHER
+<ADVERBIO> ::= HERE | BAD | FAST | SLOW
+<ADJETIVO> ::= TALL | HIGH | SHORT | BIG | SMALL | ANGRY | HAPPY | CRAZY 
+<SUJETO> ::= <ARTICULO_DEF><SUSTANTIVO>
+<SUJETO_PRON> ::=  <PRON_PS><VERBO_S> | <PRON_PP><VERBO_P> | <PRON_PI><VERBO_SI>
+<VERBO_N> ::= JUMP | SING | EAT | RUN
+<PRON_PI> ::= I
+<PRON_PS> ::= HE | SHE | IT 
+<PRON_PP> ::= YOU | WE | THEY
+<VERBO_SI> ::= AM
+<VERBO_S> ::= IS
+<VERBO_P> ::= ARE
+<OBJ_DEF> ::= <ARTICULO_DEF><SUSTANTIVO> 
+<OBJ_INDEF> ::= <ARTICULO_INDEF><SUSTANTIVO>
+<SEN_SIMPLE> ::= <SUJETO><VERBO_N> 
+<SENTECES_OBJ> ::= <SEN_SIMPLE><VERBO_N>[<OBJETO_DEF> | <OBJ_INDEF>] 
+<SENTECES_ADB> ::= <SUJETO><VERBO_N><ADVERBIO>
+<SENTECES_ADJ> ::= <SUJETO><VERBO_N><ADJETIVO>
+<SENTECES_SUS> ::= <SUJETO><VERBO_N>[<ARTICULO_DEF> | <ARTICULO_INDEF>]<SUSTANTIVO>
+
+
+

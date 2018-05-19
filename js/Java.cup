@@ -1,0 +1,127 @@
+/*--------------- 1ra Area: Codigo de Usuario -----------------------*/
+//-------> importaciones, paquetes
+package Analizadores;
+import java_cup.runtime.Symbol;
+import java.util.LinkedList;
+
+//------> Codigo para el parser,variables, metodos
+parser code
+{:
+    public String resultado="";
+    public static LinkedList<TError> TablaES = new LinkedList<TError>(); 
+
+    //Metodo al que se llama automaticamente ante algun error sintactico
+    public void syntax_error(Symbol s)
+    {        
+        String lexema = s.value.toString();
+        int fila = s.right;
+        int columna = s.left;
+        
+        System.out.println("!!!!!!! Error Sintactico Recuperado !!!!!!!");
+        System.out.println("\t\tLexema: "+lexema);
+        System.out.println("\t\tFila: "+fila);
+        System.out.println("\t\tColumna: "+columna);
+
+        TError datos = new TError(lexema,fila,columna,"Error Sintactico","Caracter no esperado");
+        TablaES.add(datos);
+       
+        
+    }
+
+    //Metodo al que se llama en el momento en que ya no es posible una recuperacion de errores
+
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception
+    {        
+        String lexema = s.value.toString();
+        int fila = s.right;
+        int columna = s.left;
+        
+        System.out.println("!!!!!!! Error Sintactico, Panic Mode !!!!!!! ");
+        System.out.println("\t\tLexema: "+lexema);
+        System.out.println("\t\tFila: "+fila);
+        System.out.println("\t\tColumna: "+columna);
+
+        TError datos = new TError(lexema,fila,columna,"Error Sintactico","Caracter no esperado");
+        TablaES.add(datos);
+     
+    }
+:}
+
+//------> Codigo para las acciones gramaticales
+action code
+{:
+
+:}
+
+non terminal String A,
+        SENTECES_AFIR, 
+        Sent_simple, 
+        Sent_objeto, 
+        Sent_advervio, 
+        Sent_adjetivo, 
+        Sent_sustI,
+        Sent_sustP,
+        Sent_sustS;
+
+terminal String
+	Sustantivo,        
+	Ad_Posesivo,       
+	Ad_Demostrativo,   
+	Ad_Calificativo,   
+	Ad_Num_Cardinal,   
+	Ad_Num_Ordinal,    
+	Ad_Indefinido,     
+	Ar_Definido,       
+	Ar_Indefinido,     
+	PRON_PER_PLUR,     
+	PRON_PER_SING,
+        PRON_I,
+        PRO_PERSON,
+	VER_SING,          
+	VER_PLUR,
+        VER_AM,
+	Pron_Demostrativo, 
+	Pron_Interrogativo,
+	VB_Regular,        
+	VB_Irregulares,    
+	ADB_Tiempo,        
+	ADB_Lugar,         
+	ADB_Cantidad,      
+	ADB_Modo,          
+	ADB_Afirmacion,    
+	ADB_Negacion,     
+	ADB_Duda,          
+	Preposicion,
+        CC_Copulativas,  
+	CC_Adversativas, 
+	CC_Distributivas,
+	CC_Disyuntivas,  
+	CC_Explicativas, 
+	CS_Condicionales,
+	CS_Casuales,     
+	CS_Consecutivas, 
+	CS_Concesivas,   
+	CS_Comparativas, 
+	CS_Finales,      
+	Interjeccion,    
+	Contracciones;          
+
+
+
+start with SENTECES_AFIR;
+
+SENTECES_AFIR ::= Ar_Definido:a  Sustantivo:b  VB_Regular:c {: String espan = new Consola.Traducir(a, b, c); System.out.println(espan); :}
+
+           |Ar_Definido:a Sustantivo:b VB_Regular:c Ar_Definido:d  Sustantivo:e {:  /*codigo java para traducir*/ :}
+           
+           |PRON_PER_SING:a VER_SING:b ADB_Tiempo:c {:  /*codigo java para traducir*/ :}
+
+           |PRO_PERSON:a VB_Regular:b Ad_Calificativo:c {:  /*codigo java para traducir*/  :}
+           
+           |PRON_PER_PLUR:a VER_PLUR:b Ar_Definido:c  Sustantivo:d {:  /*codigo java para traducir*/  :}
+
+           |PRON_PER_SING:a VER_SING:b Ar_Definido:c Sustantivo:d {:  /*codigo java para traducir*/  :}
+
+           |PRON_I:a VER_AM:b Ar_Definido:c Sustantivo:d {:  /*codigo java para traducir*/  :}
+	
+;
